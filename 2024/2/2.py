@@ -63,9 +63,7 @@ def safe_report(report):
     levels = list(map(int, report.split()))
     is_increasing = all(levels[i] < levels[i + 1] for i in range(len(levels) - 1))
     is_decreasing = all(levels[i] > levels[i + 1] for i in range(len(levels) - 1))
-
     valid_differences = all(1 <= abs(levels[i] - levels[i + 1]) <= 3 for i in range(len(levels) - 1))
-
     return valid_differences and (is_increasing or is_decreasing)
 
 
@@ -74,28 +72,16 @@ def with_dampener(report):
     if safe_report(report):
         return True
 
-    for i in range(len(levels)):
-        modified_levels = levels[:i] + levels[i + 1:]
-        if safe_report(" ".join(map(str, modified_levels))):
-            return True
-
-    return False
+    return any(safe_report(" ".join(map(str, levels[:i] + levels[i + 1:]))) for i in range(len(levels)))
 
 
 def count_safe_reports(data, dampener=False):
     reports = data.strip().split('\n')
-    if dampener:
-        safe_count = sum(1 for report in reports if with_dampener(report))
-    else:
-        safe_count = sum(1 for report in reports if safe_report(report))
-    return safe_count
+    return sum(with_dampener(report) if dampener else safe_report(report) for report in reports)
 
 
-safe_reports_part_one = count_safe_reports(data, dampener=False)
-print(f"Part 1: {safe_reports_part_one}")
-
-safe_reports_part_two = count_safe_reports(data, dampener=True)
-print(f"Part 2: {safe_reports_part_two}")
+print(f"Part 1: {count_safe_reports(data, dampener=False)}")
+print(f"Part 2: {count_safe_reports(data, dampener=True)}")
 
 
 
