@@ -58,7 +58,6 @@ def part1(val, nums):
         temp = i
         operators = []
 
-        # Generate operator codes
         for _ in range(pos):
             operators.append(temp % 3)
             temp //= 3
