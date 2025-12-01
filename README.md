@@ -2,3 +2,4 @@
 Advent of code solutions in [Python](https://www.python.org/)
 
 - [2024](2024)
+- [2025](2025)
