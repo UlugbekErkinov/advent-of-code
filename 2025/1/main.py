@@ -1,3 +1,5 @@
+# --- Day 1: Secret Entrance ---
+
 def part1(filename):
     with open(filename, 'r') as f:
         rotations = [line.strip() for line in f if line.strip()]
