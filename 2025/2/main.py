@@ -66,11 +66,3 @@ def part2(filename):
                 total_sum += num
     
     return total_sum
-
-
-try:
-    input_file = 'input.txt'
-    print("PART 1: {}".format(part1(input_file)))
-    print("PART 2: {}".format(part2(input_file)))
-except FileNotFoundError:
-    print("Error: input.txt not found.")
