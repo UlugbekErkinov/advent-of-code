@@ -67,9 +67,16 @@ def part2(filename):
         result = linprog(c=c, A_eq=A_eq, b_eq=b_eq, integrality=1, method='highs')
         
         if result.success:
-            return int(result.fun)
-        
-        return 0
+            return int(round(result.fun)) # Use round to handle potential float results
+        else:
+            # Check status for more information
+            if result.status == 2:
+                print("Warning: Problem is Infeasible for this line.")
+                return -1 # Indicate no solution found
+            else:
+                # Other statuses (unbounded, numerical trouble, etc.)
+                print(f"Warning: Optimization failed with status {result.status} and message: {result.message}")
+                return -1
     
     with open(filename, 'r') as f:
         lines = [line.strip() for line in f if line.strip()]
